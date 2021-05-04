@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title>Address details file processing</title>
+	</head>
+	<body >
+		<center>
+			<div style="padding-top:150px">
+				<h2>Excel File Process</h2><br><br>
+				<form action="{%url 'xl_process' %}" method="POST" enctype="multipart/form-data" style="width:40%;padding:30px;border:1px solid black">
+					{% csrf_token %}
+					{% if exception_err %}
+						
+						{% if exception_err == "'Address'" %}
+							<span style="color:red">Error : Empty or invalid Address column in excel file</span><br><br>
+						{% else %}
+							<span style="color:red">Error : {{exception_err}}</span><br><br>
+						{% endif %}
+					{% endif %}
+					{%if common_error%}
+						<span style="color:red">Error : {{common_error}} </span><br><br>
+					{%endif%}
+
+					{% if messages %}
+						{% for message in messages %}
+							<span style="color:green"> {{ message }}</span> <br><br>
+						{% endfor %}
+					{% endif %}
+					
+					<input type="file" name="excel_file" title="Upload excel file"><br><br><br>
+					<input type="Submit" value="Process" style="cursor:pointer">
+				</form>
+			</div>
+		</center>
+	</body>
+</html>
